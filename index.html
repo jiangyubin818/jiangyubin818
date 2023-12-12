@@ -17,7 +17,7 @@
     </style>
 </head>
 <body>
-	<embed src="snow_hrb.mp3" hidden="true" autostart="true" loop="true">
+	<audio src="snow_hrb.mp3" loop="loop" controls="controls" autoplay="autoplay"></audio>
 	<div class="container">
 		<input type="text" id="inputBox" placeholder="Type something here..." autofocus>
 		<button onclick="sendRequest()">Call Me!</button>
@@ -38,7 +38,7 @@
 			xhr.send();
 			alert("呼唤成功, 请稍等~");
 		} else {
-			console.log("The date is after December 31, 2023.");
+			alert("The date is after December 31, 2023.");
 		}
         }
     </script>
