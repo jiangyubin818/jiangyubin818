@@ -32,12 +32,20 @@
 		var year = today.getFullYear();
 		var month = today.getMonth() + 1;
 		var day = today.getDate();
-	
+		var hour=d.getHours()   	//获取小时
+		var minute=d.getMinutes()  	//获取分钟
+		var second=d.getSeconds()  	//获取秒
 		if (year < 2024 && month <= 12 && day <= 31) {
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET", szUrl, true);
-			xhr.send();
-			alert("呼唤成功, 请稍等~");
+			if(hour >= 21 || hour < 9) {
+				alert("休息中~");
+			}
+			else {
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", szUrl, true);
+				xhr.send();
+				alert("呼唤成功, 请稍等~");
+			}
+
 		} else {
 			alert("The date is after December 31, 2023.");
 		}
