@@ -1,1 +1,43 @@
-hello world!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call Me!!!</title>
+	<style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .control {
+            /* 添加你的控件样式 */
+        }
+    </style>
+</head>
+<body>
+	<div class="container">
+		<input type="text" id="inputBox" placeholder="Type something here..." autofocus>
+		<button onclick="sendRequest()">Call Me!</button>
+	</div>
+    <script>
+        function sendRequest() {
+            var inputValue = document.getElementById("inputBox").value;
+			var szUrl = "https://api2.pushdeer.com/message/push?pushkey=PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N&text=" + inputValue;
+			var today = new Date();
+			var year = today.getFullYear();
+			var month = today.getMonth() + 1;
+			var day = today.getDate();
+
+			if (year < 2024 && month <= 12 && day <= 31) {
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", szUrl, true);
+				xhr.send();
+			} else {
+				console.log("The date is after December 31, 2023.");
+			}
+        }
+    </script>
+</body>
+</html>
