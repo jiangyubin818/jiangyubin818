@@ -19,16 +19,12 @@
 </head>
 
 <body>
+	<audio src="snow_hrb.mp3" loop="loop" controls="controls" autoplay="autoplay"></audio>
 	<div class="container">
 		<input type="text" id="inputBox" placeholder="Type something here..." autofocus>
 		<button onclick="sendRequest()">Call Me!</button>
 	</div>
 	
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.0/dist/APlayer.min.css">
-	<script src="https://blog-static.cnblogs.com/files/yjlaugus/APlayer.min.js"></script>
-	<div id="aplayer" class="aplayer"  data-id="865331941" data-server="netease" data-type="playlist" data-fixed="true" data-listfolded="true" data-order="random" data-theme="#F58EA8"></div>
-	<script src="https://unpkg.com/meting@1.2/dist/Meting.min.js"></script>
- 
     	<script>
 	        function sendRequest() {
 			var inputValue = document.getElementById("inputBox").value;
