@@ -25,22 +25,27 @@
 	</div>
     <script>
         function sendRequest() {
-            	var inputValue = document.getElementById("inputBox").value;
-		var szUrl = "https://api2.pushdeer.com/message/push?pushkey=PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N&text=" + inputValue;
-		document.getElementById("inputBox").value = "";
-		var today = new Date();
-		var year = today.getFullYear();
-		var month = today.getMonth() + 1;
-		var day = today.getDate();
-		if (year < 2024 && month <= 12 && day <= 31) {
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET", szUrl, true);
-			xhr.send();
-			alert("呼唤成功, 请稍等~");
-
-		} else {
-			alert("The date is after December 31, 2023.");
-		}
+			var inputValue = document.getElementById("inputBox").value;
+			var szUrl = "https://api2.pushdeer.com/message/push?pushkey=PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N&text=" + inputValue;
+			document.getElementById("inputBox").value = "";
+			var getTodayDate = new Date();  
+			var year = getTodayDate.getFullYear();
+			var month = getTodayDate.getMonth() + 1;
+			var day = getTodayDate.getDate();
+			if (year < 2024 && month <= 12 && day <= 31) {
+				var hour = new Date().getHours();
+				var dt = new Date().getDay();
+				if(dt == 0 || dt == 6 || hour < 9 || hour >= 21){
+					alert("充电ing~");
+				} else {
+					var xhr = new XMLHttpRequest();
+					xhr.open("GET", szUrl, true);
+					xhr.send();
+					alert("呼唤成功, 请稍等~");
+				}
+			} else {
+				alert("The date is after December 31, 2023.");
+			}
         }
     </script>
 </body>
