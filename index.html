@@ -25,25 +25,25 @@
 		<button onclick="sendRequest()">Call Me!</button>
 	</div>
     <script>
-		var ip = "";
-		function getIPAddress() {
-				// 如果该浏览器支持XMLHttpRequest对象
-				if (window.XMLHttpRequest) {
-					xmlhttp = new XMLHttpRequest();
-				} else {
-					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				xmlhttp.onreadystatechange = function() {
-					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-						ip = xmlhttp.responseText;
-					} 
-				}
-				xmlhttp.open("GET", "https://api.ipify.org", true); // 使用ipify提供的API
-				xmlhttp.send();
-		}
+	var ip = "";
+	function getIPAddress() {
+			// 如果该浏览器支持XMLHttpRequest对象
+			if (window.XMLHttpRequest) {
+				xmlhttp = new XMLHttpRequest();
+			} else {
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					ip = xmlhttp.responseText;
+				} 
+			}
+			xmlhttp.open("GET", "https://api.ipify.org", true); // 使用ipify提供的API
+			xmlhttp.send();
+	}
         function sendRequest() {
 			var inputValue = document.getElementById("inputBox").value;
-			var szUrl = "https://api2.pushdeer.com/message/push?pushkey=PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N&text=" + inputValue + "[" + ip + "]";
+			var szUrl = "https://api2.pushdeer.com/message/push?pushkey=PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N&text=" + inputValue + "_" + ip;
 			document.getElementById("inputBox").value = "";
 			var getTodayDate = new Date();  
 			var year = getTodayDate.getFullYear();
@@ -64,7 +64,7 @@
 				alert("The date is after December 31, 2023.");
 			}
         }
-		window.onload = getIPAddress;
+	window.onload = getIPAddress;
     </script>
 </body>
 </html>
