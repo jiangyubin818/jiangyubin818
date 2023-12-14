@@ -14,41 +14,57 @@
 		background: url(bg.jpg) no-repeat center center;
 		background-size: cover;
 		background-attachment: fixed;
-		} 
+		}
+	video {
+		display: block;
+		margin: auto;
+		width: 640px;
+		height: 360px;
+		align-items: center;
+	}
+	audio {
+		display: block;
+		margin: auto;
+		width: 640px;
+		height: 360px;
+		align-items: center;
+	}
     </style>
 </head>
 
 <body>
-	<audio src="snow_hrb.mp3" loop="loop" controls="controls" autoplay="autoplay"></audio>
 	<div class="container">
 		<input type="text" id="inputBox" placeholder="Type something here..." autofocus>
 		<button onclick="sendRequest()">Call Me!</button>
 	</div>
-	
-    	<script>
+	<script>
 	        function sendRequest() {
-			var inputValue = document.getElementById("inputBox").value;
-			var szUrl = "https://api2.pushdeer.com/message/push?pushkey=PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N&text=" + inputValue;
-			document.getElementById("inputBox").value = "";
-			var getTodayDate = new Date();  
-			var year = getTodayDate.getFullYear();
-			var month = getTodayDate.getMonth() + 1;
-			var day = getTodayDate.getDate();
-			if (year < 2024 && month <= 12 && day <= 31) {
-				var hour = new Date().getHours();
-				var dt = new Date().getDay();
-				if(dt == 0 || dt == 6 || hour < 9 || hour >= 21){
-					alert("充电ing~");
+				var inputValue = document.getElementById("inputBox").value;
+				var szUrl = "https://api2.pushdeer.com/message/push?pushkey=PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N&text=" + inputValue;
+				document.getElementById("inputBox").value = "";
+				var getTodayDate = new Date();  
+				var year = getTodayDate.getFullYear();
+				var month = getTodayDate.getMonth() + 1;
+				var day = getTodayDate.getDate();
+				if (year < 2024 && month <= 12 && day <= 31) {
+					var hour = new Date().getHours();
+					var dt = new Date().getDay();
+					if(dt == 0 || dt == 6 || hour < 9 || hour >= 21){
+						alert("充电ing~");
+					} else {
+						var xhr = new XMLHttpRequest();
+						xhr.open("GET", szUrl, true);
+						xhr.send();
+						alert("呼唤成功, 请稍等~");
+					}
 				} else {
-					var xhr = new XMLHttpRequest();
-					xhr.open("GET", szUrl, true);
-					xhr.send();
-					alert("呼唤成功, 请稍等~");
+					alert("The date is after December 31, 2023.");
 				}
-			} else {
-				alert("The date is after December 31, 2023.");
-			}
-        }
-    </script>
+	        }
+    	</script>
+	<audio src="snow_hrb.mp3" loop="loop" controls="controls" autoplay="autoplay"></audio>
+	<video controls>
+		<source src="glgs.mp4" type="video/mp4"> Your browser does not support HTML5 video.
+	</video>
 </body>
 </html>
