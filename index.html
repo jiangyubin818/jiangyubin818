@@ -1,70 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Call Me!!!</title>
-	<style>
+	<title>Call Me!!!</title>
+    <style>
         .container {
-        	display: flex;
-            	justify-content: center;
-            	align-items: center;
+            display: flex;
+			justify-content: center;
+            align-items: center;
         }
-	body {
-		background: url(./res/bg.jpg) no-repeat center center;
-		background-size: cover;
-		background-attachment: fixed;
+        .left, .right {
+            width: 50%;
+            padding: 20px;
+        }
+		body {
+			background: url(./res/bg.jpg) no-repeat center center;
+			background-size: cover;
+			background-attachment: fixed;
 		}
-	video {
-		display: block;
-		margin: auto;
-		width: 640px;
-		height: 360px;
-		align-items: center;
-	}
-	audio {
-		display: block;
-		margin: auto;
-		width: 640px;
-		height: 360px;
-		align-items: center;
-	}
     </style>
 </head>
-
 <body>
 	<div class="container">
 		<input type="text" id="inputBox" placeholder="Type something here..." autofocus>
 		<button onclick="sendRequest()">Call Me!</button>
 	</div>
+	<div class="container">
+		<div class="left">
+			<h2>Music List</h2>
+			<ul>
+				<li><a href="./Music/snow_hrb.mp3" onclick="playAudio(this)">下雪哈尔滨</a></li>
+			</ul>
+		</div>
+		<div class="right">
+			<h2>Video List</h2>
+			<ul>
+				<li><a href="./Video/Adele - Someone Like You (Official Music Video).mp4" onclick="playVideo(this)">Someone Like You</a></li>
+				<li><a href="./Video/面具_Persona.mp4" onclick="playVideo(this)">面具_Persona</a></li>
+				<li><a href="./Video/晚风心里吹-阿梨粤.mp4" onclick="playVideo(this)">晚风心里吹</a></li>
+			</ul>
+		</div>
+	</div>
+
 	<script>
-	        function sendRequest() {
-				var inputValue = document.getElementById("inputBox").value;
-				var szUrl = "https://api2.pushdeer.com/message/push?pushkey=PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N&text=" + inputValue;
-				document.getElementById("inputBox").value = "";
-				var getTodayDate = new Date();  
-				var year = getTodayDate.getFullYear();
-				var month = getTodayDate.getMonth() + 1;
-				var day = getTodayDate.getDate();
-				if (year < 2024 && month <= 12 && day <= 31) {
-					var hour = new Date().getHours();
-					var dt = new Date().getDay();
-					if(dt == 0 || dt == 6 || hour < 9 || hour >= 21){
-						alert("充电ing~");
-					} else {
-						var xhr = new XMLHttpRequest();
-						xhr.open("GET", szUrl, true);
-						xhr.send();
-						alert("呼唤成功, 请稍等~");
-					}
+		function playAudio(element) {
+			var audio = new Audio(element.href);
+			audio.play();
+			return false;
+		}
+
+		function playVideo(element) {
+			var video = document.createElement('video');
+			video.src = element.href;
+			video.play();
+			return false;
+		}
+		function sendRequest() {
+			var inputValue = document.getElementById("inputBox").value;
+			var szUrl = "https://api2.pushdeer.com/message/push?pushkey=PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N&text=" + inputValue;
+			document.getElementById("inputBox").value = "";
+			var getTodayDate = new Date();  
+			var year = getTodayDate.getFullYear();
+			var month = getTodayDate.getMonth() + 1;
+			var day = getTodayDate.getDate();
+			if (year < 2024 && month <= 12 && day <= 31) {
+				var hour = new Date().getHours();
+				var dt = new Date().getDay();
+				if(dt == 0 || dt == 6 || hour < 9 || hour >= 21){
+					alert("充电ing~");
 				} else {
-					alert("The date is after December 31, 2023.");
+					var xhr = new XMLHttpRequest();
+					xhr.open("GET", szUrl, true);
+					xhr.send();
+					alert("呼唤成功, 请稍等~");
 				}
-	        }
-    	</script>
-	<audio src="./Music/snow_hrb.mp3" loop="loop" controls="controls" autoplay="autoplay"></audio>
-	<video controls>
-		<source src="./Video/Adele - Someone Like You (Official Music Video).mp4" type="video/mp4"> Your browser does not support HTML5 video.
-	</video>
+			} else {
+				alert("The date is after December 31, 2023.");
+			}
+	    }
+	</script>
+
 </body>
 </html>
