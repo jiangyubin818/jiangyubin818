@@ -3,20 +3,37 @@
 <head>
 	<title>Call Me!!!</title>
 	<style>
+	/* 移动优先的基本样式 */
 	.container {
-	    display: flex;
-	justify-content: center;
-	    align-items: center;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
 	}
-	.left, .right {
-		width: 50%;
+
+	.left,
+	.right {
+		width: 100%;
+		margin-bottom: 20px;
 		padding: 20px;
 	}
+
 	body {
 		background: url(./res/bg.jpg) no-repeat center center;
 		background-size: cover;
 		background-attachment: fixed;
 	}
+
+	/* 响应式断点 */
+	@media (min-width: 768px) {
+		.left,
+		.right {
+			width: 50%;
+			margin-bottom: 0;
+		}
+	}
+
+	/* ... 其他移动优先和响应式的基础样式 ... */
 	</style>
 </head>
 <body>
