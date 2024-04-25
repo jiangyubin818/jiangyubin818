@@ -31,7 +31,7 @@
     /* 新增样式，用于定位方向按钮 */
     .direction-buttons {
       position: absolute;
-      bottom: 10px;
+      bottom: 45%;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -44,12 +44,12 @@
 <body>
   <!-- 添加四个方向按钮 -->
   <div class="direction-buttons">
-    <button id="left-btn" style="width: 50%; height: 50%;">left</button>
+    <button id="left-btn" style="width: 80px; height: 30px;">left</button>
     <div style="display: flex; flex-direction: column;">
-      <button id="up-btn" style="width: 50%; height: 50%;">up</button>
-      <button id="down-btn" style="width: 50%; height: 50%;">d</button>
+      <button id="up-btn" style="width: 80px; height: 30px;">up</button>
+      <button id="down-btn" style="width: 80px; height: 30px;">d</button>
     </div>
-    <button id="right-btn" style="width: 50%; height: 50%;">right</button>
+    <button id="right-btn" style="width: 80px; height: 30px;">right</button>
   </div>
 
   <script type="text/javascript">
@@ -264,9 +264,9 @@
       Game.prototype.addScore = function() {
         this.score ++;
 		
-		if(this.score >= 1)
+		if(this.score >= 5)
 		{
-			window.open('data.html', '_blank');
+			window.open('test.html', '_blank');
 			clearInterval(game.timer); // 可选：停止游戏计时器
 		}
 
