@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Call Me!!!</title>
+	<style>
+	/* 移动优先的基本样式 */
+	.container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.left,
+	.right {
+		width: 100%;
+		margin-bottom: 20px;
+		padding: 20px;
+	}
+
+	body {
+		background: url(./res/bg.jpg) no-repeat center center;
+		background-size: cover;
+		background-attachment: fixed;
+	}
+
+	/* 响应式断点 */
+	@media (min-width: 768px) {
+		.left,
+		.right {
+			width: 50%;
+			margin-bottom: 0;
+		}
+	}
+
+	/* ... 其他移动优先和响应式的基础样式 ... */
+	</style>
+</head>
+<body>
+	<div class="container">
+		<input type="text" id="inputBox" placeholder="Type something here..." autofocus>
+		<button onclick="sendRequest()">Call Me!</button>
+	</div>
+	<div class="container">
+		<div class="left">
+			<h2>Music List</h2>
+			<ul>
+				<li><a href="./Music/snow_hrb.mp3" onclick="playAudio(this)">下雪哈尔滨</a></li>
+				<li><a href="./Music/兰亭集序.mp3" onclick="playAudio(this)">兰亭集序</a></li>
+				<li><a href="./Music/晴天.mp3" onclick="playAudio(this)">晴天</a></li>
+				<li><a href="./Music/爱在西元前.mp3" onclick="playAudio(this)">爱在西元前</a></li>
+				<li><a href="./Music/花海.mp3" onclick="playAudio(this)">花海</a></li>
+				<li><a href="./Music/蒲公英的约定.mp3" onclick="playAudio(this)">蒲公英的约定</a></li>
+				<li><a href="./Music/周杰伦 - .搁浅.mp3" onclick="playAudio(this)">搁浅</a></li>
+				<li><a href="./Music/周杰伦 - .将军.mp3" onclick="playAudio(this)">将军</a></li>
+				<li><a href="./Music/周杰伦 - .借口.mp3" onclick="playAudio(this)">借口</a></li>
+				<li><a href="./Music/周杰伦 - .困兽之斗.mp3" onclick="playAudio(this)">困兽之斗</a></li>
+				<li><a href="./Music/周杰伦 - .乱舞春秋.mp3" onclick="playAudio(this)">乱舞春秋</a></li>
+				<li><a href="./Music/周杰伦 - .七里香.mp3" onclick="playAudio(this)">七里香</a></li>
+				<li><a href="./Music/周杰伦 - .外婆.mp3" onclick="playAudio(this)">外婆</a></li>
+				<li><a href="./Music/周杰伦 - .我的地盘.mp3" onclick="playAudio(this)">我的地盘</a></li>
+				<li><a href="./Music/周杰伦 - .止战之殇.mp3" onclick="playAudio(this)">止战之殇</a></li>
+				<li><a href="./Music/周杰伦 - .园游会.mp3" onclick="playAudio(this)">园游会</a></li>
+			</ul>
+		</div>
+		<div class="right">
+			<h2>Video List</h2>
+			<ul>
+				<li><a href="./Video/晚风心里吹-阿梨粤.mp4" onclick="playVideo(this)">晚风心里吹</a></li>
+				<li><a href="./Video/青花瓷_周杰伦.mp4" onclick="playVideo(this)">青花瓷</a></li>
+				<li><a href="./Video/蓝莲花_许巍.mp4" onclick="playVideo(this)">蓝莲花</a></li>
+				<li><a href="./Video/幻听_许嵩.mp4" onclick="playVideo(this)">幻听</a></li>
+				<li><a href="./Video/清明雨上_许嵩.mp4" onclick="playVideo(this)">清明雨上</a></li>
+				<li><a href="./Video/素颜_许嵩.mp4" onclick="playVideo(this)">素颜</a></li>
+				<li><a href="./Video/如果当时_许嵩.mp4" onclick="playVideo(this)">如果当时</a></li>
+				<li><a href="./Video/庐州月_许嵩.mp4" onclick="playVideo(this)">庐州月</a></li>
+				<li><a href="./Video/AINY_邓紫棋.mp4" onclick="playVideo(this)">A.I.N.Y</a></li>
+				<li><a href="./Video/追梦赤子心_张韶涵.mp4" onclick="playVideo(this)">追梦赤子心</a></li>
+				<li><a href="./Video/可爱女人_周杰伦.mp4" onclick="playVideo(this)">可爱女人</a></li>
+				<li><a href="./Video/月半小夜曲 _李克勤.mp4" onclick="playVideo(this)">月半小夜曲</a></li>
+				<li><a href="./Video/灌篮高手.mp4" onclick="playVideo(this)">灌篮高手</a></li>
+				<li><a href="./Video/同一种调调.mp4" onclick="playVideo(this)">同一种调调</a></li>
+				<li><a href="./Video/you belong with me.mp4" onclick="playVideo(this)">you belong with me</a></li>
+				<li><a href="./Video/蓝莲花_update.mp4" onclick="playVideo(this)">蓝莲花_专属更新</a></li>
+				<li><a href="./Video/莫扎特钢琴曲k448.mp4" onclick="playVideo(this)">k448</a></li>
+				<li><a href="./Video/Sister Act- I Will Follow Him.mp4" onclick="playVideo(this)">I Will Follow Him</a></li>
+				<li><a href="./Video/听见下雨的声音.mp4" onclick="playVideo(this)">听见下雨的声音</a></li>
+				<li><a href="./Video/发如雪.mp4" onclick="playVideo(this)">发如雪</a></li>
+				<li><a href="./Video/噔噔噔.mp4" onclick="playVideo(this)">噔噔噔</a></li>
+				<li><a href="./Video/今年夏天.mp4" onclick="playVideo(this)">今年夏天</a></li>
+				<li><a href="./Video/夜曲.mp4" onclick="playVideo(this)">小仙女青春的记忆~</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<script>
+		function playAudio(element) {
+			var audio = new Audio(element.href);
+			audio.play();
+			return false;
+		}
+
+		function playVideo(element) {
+			var video = document.createElement('video');
+			video.src = element.href;
+			video.play();
+			return false;
+		}
+		function sendRequest() {
+			var inputValue = document.getElementById("inputBox").value;
+			var szUrl = "https://api2.pushdeer.com/message/push?pushkey=PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N&text=" + inputValue;
+			document.getElementById("inputBox").value = "";
+			var getTodayDate = new Date();  
+			var year = getTodayDate.getFullYear();
+			var month = getTodayDate.getMonth() + 1;
+			var day = getTodayDate.getDate();
+			if (year < 2025 && month <= 12 && day <= 31) {
+				var hour = new Date().getHours();
+				var dt = new Date().getDay();
+				if(dt == 0 || dt == 6 || hour < 9 || hour >= 21){
+					alert("充电ing~");
+				} else {
+					var xhr = new XMLHttpRequest();
+					xhr.open("GET", szUrl, true);
+					xhr.send();
+					alert("呼唤成功, 请稍等~");
+				}
+			} else {
+				alert("The date is after December 31, 2023.");
+			}
+	    }
+	</script>
+
+</body>
+</html>
