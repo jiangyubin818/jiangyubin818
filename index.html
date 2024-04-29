@@ -117,7 +117,7 @@
 			var audio = new Audio(element.href);
 			audio.play();
 			// 构建推送消息内容，这里以歌曲名称和链接为例
-			var pushMessage = `${element.textContent} 正在播放: ${element.href}`;
+			var pushMessage = `正在播放: ${element.textContent}`;
 			sendPushMessage(pushMessage);
 			return false;
 		}
@@ -126,7 +126,7 @@
 			video.src = element.href;
 			video.play();
 			// 构建推送消息内容，这里以视频名称和链接为例
-			var pushMessage = `${element.textContent} 正在播放: ${element.href}`;
+			var pushMessage = `正在播放: ${element.textContent}`;
 			sendPushMessage(pushMessage);
 			return false;
 		}
