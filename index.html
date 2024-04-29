@@ -103,16 +103,31 @@
 	            xhr.open("GET", szUrl, true);
 	            xhr.send();
 	        }
+		// 新增函数，用于发送推送通知
+		function sendPushMessage(message) {
+		    var pushKey = "PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N"; // 这里应该是你的PushDeer推送密钥
+		    var encodedMessage = encodeURIComponent(message); // 对消息内容进行编码以便于URL传输
+		    var apiUrl = `https://api2.pushdeer.com/message/push?pushkey=${pushKey}&text=${encodedMessage}`;
+		    
+		    var xhr = new XMLHttpRequest();
+		    xhr.open("GET", apiUrl, true);
+		    xhr.send();
+		}
 		function playAudio(element) {
 			var audio = new Audio(element.href);
 			audio.play();
+			// 构建推送消息内容，这里以歌曲名称和链接为例
+			var pushMessage = `${element.textContent} 正在播放: ${element.href}`;
+			sendPushMessage(pushMessage);
 			return false;
 		}
-
 		function playVideo(element) {
 			var video = document.createElement('video');
 			video.src = element.href;
 			video.play();
+			// 构建推送消息内容，这里以视频名称和链接为例
+			var pushMessage = `${element.textContent} 正在播放: ${element.href}`;
+			sendPushMessage(pushMessage);
 			return false;
 		}
 		function sendRequest() {
