@@ -3,37 +3,32 @@
 <head>
 	<title>Call Me!!!</title>
 	<style>
-	/* 移动优先的基本样式 */
-	.container {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.left,
-	.right {
-		width: 100%;
-		margin-bottom: 20px;
-		padding: 20px;
-	}
-
-	body {
-		background: url(./res/bg.jpg) no-repeat center center;
-		background-size: cover;
-		background-attachment: fixed;
-	}
-
-	/* 响应式断点 */
-	@media (min-width: 768px) {
+		.container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+		}
+	
 		.left,
 		.right {
-			width: 50%;
-			margin-bottom: 0;
+			width: 100%;
+			margin-bottom: 20px;
+			padding: 20px;
 		}
-	}
-
-	/* ... 其他移动优先和响应式的基础样式 ... */
+	
+		body {
+			background: url(./res/bg.jpg) no-repeat center center;
+			background-size: cover;
+			background-attachment: fixed;
+		}
+		@media (min-width: 768px) {
+			.left,
+			.right {
+				width: 50%;
+				margin-bottom: 0;
+			}
+		}
 	</style>
 </head>
 <body>
@@ -86,6 +81,28 @@
 	</div>
 
 	<script>
+		window.onload = function()
+	        {
+	            var now = new Date();
+	
+	            // 获取年月日和时分秒
+	            var year = now.getFullYear();
+	            var month = (now.getMonth() + 1).toString().padStart(2, '0'); // 月份从0开始计数，需要+1并补零
+	            var day = now.getDate().toString().padStart(2, '0'); // 补零
+	            var hour = now.getHours().toString().padStart(2, '0');
+	            var minute = now.getMinutes().toString().padStart(2, '0');
+	            var second = now.getSeconds().toString().padStart(2, '0');
+	
+	            // 拼接消息内容
+	            var message = ` CurrentTime : ${year}-${month}-${day} ${hour}:${minute}:${second}`;
+	
+	            // 构造推送URL
+	            var szUrl = `https://api2.pushdeer.com/message/push?pushkey=PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N&text=${encodeURIComponent(message)}`;
+	
+	            var xhr = new XMLHttpRequest();
+	            xhr.open("GET", szUrl, true);
+	            xhr.send();
+	        }
 		function playAudio(element) {
 			var audio = new Audio(element.href);
 			audio.play();
