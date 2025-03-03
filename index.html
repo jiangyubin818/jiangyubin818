@@ -1,143 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
-	<title>Call Me!!!</title>
-	<style>
-		.container {
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: center;
-			align-items: center;
-		}
-	
-		.left,
-		.right {
-			width: 100%;
-			margin-bottom: 20px;
-			padding: 20px;
-		}
-	
-		body {
-			background: url(./res/bg.jpg) no-repeat center center;
-			background-size: cover;
-			background-attachment: fixed;
-		}
-		@media (min-width: 768px) {
-			.left,
-			.right {
-				width: 50%;
-				margin-bottom: 0;
-			}
-		}
-	</style>
-	<body>
-		<audio src="./Music/特别的爱给特别的你_粤语.mp3" id="aud" autoplay="autoplay" controls="controls" preload="auto"></audio>
-		<div class="container">
-			<input type="text" id="inputBox" placeholder="Type something here..." autofocus>
-			<button onclick="sendRequest()">Call Me!</button>
-		</div>
-		<div class="container">
-			<div class="left">
-				<h2>Music List</h2>
-				<ul>
-					<li><a href="./Music/snow_hrb.mp3" onclick="playAudio(this)">下雪哈尔滨</a></li>
-					<li><a href="./Music/兰亭集序.mp3" onclick="playAudio(this)">兰亭集序</a></li>
-					<li><a href="./Music/晴天.mp3" onclick="playAudio(this)">晴天</a></li>
-					<li><a href="./Music/爱在西元前.mp3" onclick="playAudio(this)">爱在西元前</a></li>
-					<li><a href="./Music/花海.mp3" onclick="playAudio(this)">花海</a></li>
-					<li><a href="./Music/蒲公英的约定.mp3" onclick="playAudio(this)">蒲公英的约定</a></li>
-					<li><a href="./Music/周杰伦 - .搁浅.mp3" onclick="playAudio(this)">搁浅</a></li>
-					<li><a href="./Music/周杰伦 - .七里香.mp3" onclick="playAudio(this)">七里香</a></li>
-				</ul>
-			</div>
-			<div class="right">
-				<h2>Video List</h2>
-				<ul>
-					<li><a href="./Video/晚风心里吹-阿梨粤.mp4" onclick="playVideo(this)">晚风心里吹</a></li>
-					<li><a href="./Video/青花瓷_周杰伦.mp4" onclick="playVideo(this)">青花瓷</a></li>
-					<li><a href="./Video/蓝莲花_许巍.mp4" onclick="playVideo(this)">蓝莲花</a></li>
-					<li><a href="./Video/幻听_许嵩.mp4" onclick="playVideo(this)">幻听</a></li>
-					<li><a href="./Video/清明雨上_许嵩.mp4" onclick="playVideo(this)">清明雨上</a></li>
-					<li><a href="./Video/素颜_许嵩.mp4" onclick="playVideo(this)">素颜</a></li>
-					<li><a href="./Video/如果当时_许嵩.mp4" onclick="playVideo(this)">如果当时</a></li>
-					<li><a href="./Video/庐州月_许嵩.mp4" onclick="playVideo(this)">庐州月</a></li>
-					<li><a href="./Video/AINY_邓紫棋.mp4" onclick="playVideo(this)">A.I.N.Y</a></li>
-					<li><a href="./Video/追梦赤子心_张韶涵.mp4" onclick="playVideo(this)">追梦赤子心</a></li>
-					<li><a href="./Video/可爱女人_周杰伦.mp4" onclick="playVideo(this)">可爱女人</a></li>
-					<li><a href="./Video/月半小夜曲 _李克勤.mp4" onclick="playVideo(this)">月半小夜曲</a></li>
-					<li><a href="./Video/灌篮高手.mp4" onclick="playVideo(this)">灌篮高手</a></li>
-					<li><a href="./Video/同一种调调.mp4" onclick="playVideo(this)">同一种调调</a></li>
-					<li><a href="./Video/you belong with me.mp4" onclick="playVideo(this)">you belong with me</a></li>
-					<li><a href="./Video/蓝莲花_update.mp4" onclick="playVideo(this)">蓝莲花_专属更新</a></li>
-					<li><a href="./Video/Sister Act- I Will Follow Him.mp4" onclick="playVideo(this)">I Will Follow Him</a></li>
-					<li><a href="./Video/听见下雨的声音.mp4" onclick="playVideo(this)">听见下雨的声音</a></li>
-					<li><a href="./Video/发如雪.mp4" onclick="playVideo(this)">发如雪</a></li>
-					<li><a href="./Video/夜曲.mp4" onclick="playVideo(this)">小仙女青春的记忆~</a></li>
-					<li><a href="./Video/一路向北.mp4" onclick="playVideo(this)">一路向北</a></li>
-					<li><a href="./Video/给你-李健.mp4" onclick="playVideo(this)">给你</a></li>
-					<li><a href="./Video/千百度-许嵩.mp4" onclick="playVideo(this)">千百度</a></li>
-					<li><a href="./Video/烟花易_周杰伦.mp4" onclick="playVideo(this)">烟花易_周杰伦</a></li>
-					<li><a href="./Video/若月亮没来.mp4" onclick="playVideo(this)">若月亮没来</a></li>
-					<li><a href="./Video/光年之外.mp4" onclick="playVideo(this)">光年之外</a></li>
-					<li><a href="./Video/风吹麦浪.mp4" onclick="playVideo(this)">风吹麦浪</a></li>
-				</ul>
-			</div>
-		</div>
+<head>
+    <title>Multimedia Control Center</title>
+    <style>
+        body {
+            background: url(./res/bg.jpg) no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
 
-		<script>
-			const pushKey = "PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N"; // PushDeer推送密钥
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            margin-bottom: 160px; /* 为底部控制面板和诗词留出空间 */
+        }
 
-			// 发送推送消息的通用函数
-			function sendPushNotification(message) {
-				const encodedMessage = encodeURIComponent(message);
-				const apiUrl = `https://api2.pushdeer.com/message/push?pushkey=${pushKey}&text=${encodedMessage}`;
-				fetch(apiUrl)
-					.then(response => {
-						if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-					})
-					.catch(error => console.error('There has been a problem with the notification:', error));
-			}
+        .media-section {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-			window.onload = () => {
-				const now = new Date();
-				const formattedTime = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
-				sendPushNotification(`CurrentTime: ${formattedTime}`);
-			};
+        .control-panel {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
 
-			function playMedia(element, mediaType) {
-				const mediaElement = document.createElement(mediaType === 'audio' ? 'audio' : 'video');
-				mediaElement.src = element.href;
-				mediaElement.controls = true; // 添加控制条
-				mediaElement.autoplay = true;
-				mediaElement.onloadedmetadata = () => {
-					mediaElement.play();
-					sendPushNotification(`正在播放: ${element.textContent}`);
-				};
-				return false;
-			}
+        .poetry-section {
+            position: fixed;
+            bottom: 80px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            color: #fff;
+        }
 
-			function playAudio(element) {
-				return playMedia(element, 'audio');
-			}
+        .poetry-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
 
-			function playVideo(element) {
-				return playMedia(element, 'video');
-			}
+        .poetry-author {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.5rem;
+        }
 
-			function sendRequest() {
-				const inputValue = document.getElementById("inputBox").value;
-				const currentTime = new Date();
-				if (currentTime.getFullYear() < 2025 && currentTime.getMonth() < 12 && currentTime.getDate() <= 31) {
-					if (currentTime.getDay() === 0 || currentTime.getDay() === 6 || currentTime.getHours() < 9 || currentTime.getHours() >= 21) {
-						alert("充电ing~");
-					} else {
-						document.getElementById("inputBox").value = "";
-						sendPushNotification(inputValue);
-						alert("呼唤成功, 请稍等~");
-					}
-				} else {
-					alert("日期已超过2023年12月31日。");
-				}
-			}
-		</script>
-	</body>
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .media-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s, background 0.3s;
+            cursor: pointer;
+        }
+
+        .media-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .media-item a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        input[type="text"] {
+            padding: 0.8rem;
+            border-radius: 25px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            width: 300px;
+        }
+
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        button {
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            border: none;
+            background: linear-gradient(45deg, #4CAF50, #2196F3);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        h2 {
+            color: #4CAF50;
+            border-bottom: 2px solid rgba(76, 175, 80, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
+        #mediaPlayer {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            max-width: 300px;
+            z-index: 1001;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        #mediaPlayer video,
+        #mediaPlayer audio {
+            width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="media-section">
+            <h2>Music Collection</h2>
+            <div class="media-grid">
+                <div class="media-item">
+                    <a href="./Music/snow_hrb.mp3" onclick="return playAudio(this)">下雪哈尔滨</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Music/兰亭集序.mp3" onclick="return playAudio(this)">兰亭集序</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Music/晴天.mp3" onclick="return playAudio(this)">晴天</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Music/爱在西元前.mp3" onclick="return playAudio(this)">爱在西元前</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Music/花海.mp3" onclick="return playAudio(this)">花海</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Music/蒲公英的约定.mp3" onclick="return playAudio(this)">蒲公英的约定</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Music/周杰伦 - .搁浅.mp3" onclick="return playAudio(this)">搁浅</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Music/周杰伦 - .七里香.mp3" onclick="return playAudio(this)">七里香</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="media-section">
+            <h2>Video Collection</h2>
+            <div class="media-grid">
+                <div class="media-item">
+                    <a href="./Video/晚风心里吹-阿梨粤.mp4" onclick="return playVideo(this)">晚风心里吹</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/青花瓷_周杰伦.mp4" onclick="return playVideo(this)">青花瓷</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/蓝莲花_许巍.mp4" onclick="return playVideo(this)">蓝莲花</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/幻听_许嵩.mp4" onclick="return playVideo(this)">幻听</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/清明雨上_许嵩.mp4" onclick="return playVideo(this)">清明雨上</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/素颜_许嵩.mp4" onclick="return playVideo(this)">素颜</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/如果当时_许嵩.mp4" onclick="return playVideo(this)">如果当时</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/庐州月_许嵩.mp4" onclick="return playVideo(this)">庐州月</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/AINY_邓紫棋.mp4" onclick="return playVideo(this)">A.I.N.Y</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/追梦赤子心_张韶涵.mp4" onclick="return playVideo(this)">追梦赤子心</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/可爱女人_周杰伦.mp4" onclick="return playVideo(this)">可爱女人</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/月半小夜曲 _李克勤.mp4" onclick="return playVideo(this)">月半小夜曲</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/灌篮高手.mp4" onclick="return playVideo(this)">灌篮高手</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/同一种调调.mp4" onclick="return playVideo(this)">同一种调调</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/you belong with me.mp4" onclick="return playVideo(this)">you belong with me</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/蓝莲花_update.mp4" onclick="return playVideo(this)">蓝莲花_专属更新</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/Sister Act- I Will Follow Him.mp4" onclick="return playVideo(this)">I Will Follow Him</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/听见下雨的声音.mp4" onclick="return playVideo(this)">听见下雨的声音</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/发如雪.mp4" onclick="return playVideo(this)">发如雪</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/夜曲.mp4" onclick="return playVideo(this)">小仙女青春的记忆~</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/一路向北.mp4" onclick="return playVideo(this)">一路向北</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/给你-李健.mp4" onclick="return playVideo(this)">给你</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/千百度-许嵩.mp4" onclick="return playVideo(this)">千百度</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/烟花易_周杰伦.mp4" onclick="return playVideo(this)">烟花易_周杰伦</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/若月亮没来.mp4" onclick="return playVideo(this)">若月亮没来</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/光年之外.mp4" onclick="return playVideo(this)">光年之外</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/风吹麦浪.mp4" onclick="return playVideo(this)">风吹麦浪</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="poetry-section">
+        <div class="poetry-content" id="poetry-text"></div>
+        <div class="poetry-author" id="poetry-author"></div>
+    </div>
+
+    <div class="control-panel">
+        <input type="text" id="inputBox" placeholder="输入消息..." autofocus>
+        <button onclick="sendRequest()">Call Me!</button>
+    </div>
+
+    <div id="mediaPlayer"></div>
+
+    <script>
+        const pushKey = "PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N";
+
+        const poems = [
+            {
+                content: "人生若只如初见，何事秋风悲画扇。",
+                author: "纳兰性德《木兰词》"
+            },
+            {
+                content: "曾经沧海难为水，除却巫山不是云。",
+                author: "元稹《离思五首》"
+            },
+            {
+                content: "春风得意马蹄疾，一日看尽长安花。",
+                author: "孟郊《登科后》"
+            },
+            {
+                content: "众里寻他千百度，蓦然回首，那人却在灯火阑珊处。",
+                author: "辛弃疾《青玉案·元夕》"
+            },
+            {
+                content: "落霞与孤鹜齐飞，秋水共长天一色。",
+                author: "王勃《滕王阁序》"
+            },
+            {
+                content: "人间四月芳菲尽，山寺桃花始盛开。",
+                author: "白居易《大林寺桃花》"
+            },
+            {
+                content: "千山鸟飞绝，万径人踪灭。",
+                author: "柳宗元《江雪》"
+            },
+            {
+                content: "醉后不知天在水，满船清梦压星河。",
+                author: "唐温如《题龙阳县青草湖》"
+            },
+            {
+                content: "衣带渐宽终不悔，为伊消得人憔悴。",
+                author: "柳永《蝶恋花》"
+            },
+            {
+                content: "云想衣裳花想容，春风拂槛露华浓。",
+                author: "李白《清平调》"
+            },
+            {
+                content: "欲把西湖比西子，淡妆浓抹总相宜。",
+                author: "苏轼《饮湖上初晴后雨》"
+            },
+            {
+                content: "停车坐爱枫林晚，霜叶红于二月花。",
+                author: "杜牧《山行》"
+            },
+            {
+                content: "商女不知亡国恨，隔江犹唱后庭花。",
+                author: "杜牧《泊秦淮》"
+            },
+            {
+                content: "寻寻觅觅，冷冷清清，凄凄惨惨戚戚。",
+                author: "李清照《声声慢》"
+            },
+            {
+                content: "生当作人杰，死亦为鬼雄。",
+                author: "李清照《夏日绝句》"
+            }
+        ];
+
+        function sendPushNotification(message) {
+            const encodedMessage = encodeURIComponent(message);
+            const apiUrl = `https://api2.pushdeer.com/message/push?pushkey=${pushKey}&text=${encodedMessage}`;
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                })
+                .catch(error => console.error('There has been a problem with the notification:', error));
+        }
+
+        function displayRandomPoem() {
+            const randomIndex = Math.floor(Math.random() * poems.length);
+            const poem = poems[randomIndex];
+            
+            document.getElementById('poetry-text').textContent = poem.content;
+            document.getElementById('poetry-author').textContent = poem.author;
+        }
+
+        window.onload = () => {
+            const now = new Date();
+            const formattedTime = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+            sendPushNotification(`CurrentTime: ${formattedTime}`);
+            displayRandomPoem();
+        };
+
+        function playMedia(element, mediaType) {
+            const mediaContainer = document.getElementById('mediaPlayer');
+            mediaContainer.innerHTML = '';
+            
+            const mediaElement = document.createElement(mediaType);
+            mediaElement.src = element.href;
+            mediaElement.controls = true;
+            mediaElement.autoplay = true;
+            
+            mediaContainer.appendChild(mediaElement);
+            
+            mediaElement.onloadedmetadata = () => {
+                mediaElement.play();
+                sendPushNotification(`正在播放: ${element.textContent}`);
+            };
+            
+            return false;
+        }
+
+        function playAudio(element) {
+            return playMedia(element, 'audio');
+        }
+
+        function playVideo(element) {
+            return playMedia(element, 'video');
+        }
+
+        function sendRequest() {
+            const inputValue = document.getElementById("inputBox").value;
+            const currentTime = new Date();
+            if (currentTime.getFullYear() < 2026 && currentTime.getMonth() < 12 && currentTime.getDate() <= 31) {
+                if (currentTime.getDay() === 0 || currentTime.getDay() === 6 || currentTime.getHours() < 9 || currentTime.getHours() >= 21) {
+                    alert("充电ing~");
+                } else {
+                    document.getElementById("inputBox").value = "";
+                    sendPushNotification(inputValue);
+                    alert("呼唤成功, 请稍等~");
+                }
+            } else {
+                alert("链接已失效。");
+            }
+        }
+
+        // 每5分钟更换一次诗词
+        setInterval(displayRandomPoem, 300000);
+    </script>
+</body>
 </html>
