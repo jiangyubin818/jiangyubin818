@@ -2,57 +2,117 @@
 <html lang="en">
 <head>
     <title>Multimedia Control Center</title>
+    <!-- 引入赛博朋克风格字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --neon-cyan: #00f3ff;
+            --neon-pink: #ff0055;
+            --neon-yellow: #ffee00;
+            --bg-dark: #050505;
+            --panel-bg: rgba(10, 15, 20, 0.85);
+            --border-width: 2px;
+        }
+
         body {
-            background: url(./res/bg.jpg) no-repeat center center;
+            /* 在背景图之上叠加一层暗色网格滤镜 */
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url(./res/bg.jpg) no-repeat center center; 
             background-size: cover;
             background-attachment: fixed;
+            background-color: var(--bg-dark);
             margin: 0;
-            font-family: 'Arial', sans-serif;
-            color: #fff;
+            font-family: 'Share Tech Mono', monospace; /* 科技感等宽字体 */
+            color: var(--neon-cyan);
+            overflow-x: hidden;
+        }
+
+        /* CRT 扫描线效果 */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: -1;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
         }
 
 		.container {
 			display: grid;
-			/* 修改为固定的两列布局 */
 			grid-template-columns: 1fr 1fr;
 			gap: 2rem;
 			padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
 		}
 
-		.media-section {
-			/* 移除之前的自适应宽度设置 */
-			background: rgba(0, 0, 0, 0.7);
-			border-radius: 15px;
+        /* 通用卡片样式 */
+		.media-section, .poetry-section, .control-panel {
+			background: var(--panel-bg);
+            /* 赛博朋克发光边框 */
+			border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.2), inset 0 0 20px rgba(0, 243, 255, 0.1);
+			border-radius: 4px; /* 减少圆角，更硬朗 */
 			padding: 1.5rem;
-			backdrop-filter: blur(10px);
-			border: 1px solid rgba(255, 255, 255, 0.1);
+			backdrop-filter: blur(5px);
+            position: relative;
 		}
+
+        /* 装饰性边角 */
+        .media-section::after, .poetry-section::after, .control-panel::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            width: 20px;
+            height: 20px;
+            border-top: 3px solid var(--neon-pink);
+            border-right: 3px solid var(--neon-pink);
+        }
+        
+        .media-section::before, .poetry-section::before, .control-panel::before {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: -1px;
+            width: 20px;
+            height: 20px;
+            border-bottom: 3px solid var(--neon-pink);
+            border-left: 3px solid var(--neon-pink);
+        }
 
 		.poetry-section {
 			grid-column: 1 / 3;
 			text-align: center;
-			padding: 1rem;  /* 从1.5rem减小到1rem */
-			background: rgba(0, 0, 0, 0.7);
-			backdrop-filter: blur(10px);
-			color: #fff;
-			border-radius: 15px;
+			padding: 1rem;
 			margin-top: 1rem;
-			height: 100px;  /* 从150px减小到100px */
+			height: 120px; /* 稍微增加高度以容纳发光效果 */
 			overflow: hidden;
-			position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-color: var(--neon-pink); /* 诗词部分用粉色边框区分 */
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.2);
 		}
 
 		.poetry-content {
-			font-size: 1.1rem;  /* 可选：从1.2rem稍微减小字体 */
-			line-height: 1.6;   /* 可选：从1.8减小行高 */
-			text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            font-family: 'Orbitron', sans-serif;
+			font-size: 1.3rem;
+			line-height: 1.6;
+			text-shadow: 0 0 5px var(--neon-pink);
 			position: absolute;
 			width: 100%;
-			transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+			transition: transform 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.5s ease-in-out; /* 更有弹性的动画 */
 			opacity: 0;
 			padding: 0 20px;
 			box-sizing: border-box;
+            color: #fff;
 		}
 
         .poetry-content.active {
@@ -69,95 +129,171 @@
 
         .poetry-author {
             font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 0.5rem;
+            color: var(--neon-cyan);
+            margin-top: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .control-panel {
-             grid-column: 1 / 3;
-            padding: 1.5rem;
+            grid-column: 1 / 3;
+            padding: 2rem;
             display: flex;
             justify-content: center;
             gap: 1rem;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
             margin-top: 1rem;
+            align-items: center;
         }
 
         .media-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 1rem;
         }
 
         .media-item {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 243, 255, 0.05);
+            border: 1px solid rgba(0, 243, 255, 0.3);
             padding: 1rem;
-            border-radius: 8px;
+            border-radius: 2px;
             text-align: center;
-            transition: transform 0.3s, background 0.3s;
+            transition: all 0.2s ease;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
+        /* 鼠标悬停时的 glitch 效果 */
         .media-item:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            background: var(--neon-cyan);
+            box-shadow: 0 0 15px var(--neon-cyan);
+            border-color: #fff;
+        }
+
+        .media-item:hover a {
+            color: #000;
+            text-shadow: none;
+            font-weight: bold;
         }
 
         .media-item a {
             color: #fff;
             text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-shadow: 0 0 2px rgba(255,255,255,0.5);
         }
 
         input[type="text"] {
-            padding: 0.8rem;
-            border-radius: 25px;
-            border: none;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            width: 300px;
+            padding: 1rem 1.5rem;
+            border-radius: 0; /* 去掉圆角 */
+            border: 1px solid var(--neon-cyan);
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--neon-yellow);
+            width: 350px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.1rem;
+            box-shadow: inset 0 0 10px rgba(0, 243, 255, 0.2);
+            transition: box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 0 15px var(--neon-cyan), inset 0 0 10px rgba(0, 243, 255, 0.4);
         }
 
         input[type="text"]::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(0, 243, 255, 0.4);
         }
 
         button {
-            padding: 0.8rem 2rem;
-            border-radius: 25px;
-            border: none;
-            background: linear-gradient(45deg, #4CAF50, #2196F3);
-            color: white;
+            padding: 1rem 3rem;
+            border-radius: 0;
+            border: 1px solid var(--neon-pink);
+            background: rgba(255, 0, 85, 0.1);
+            color: var(--neon-pink);
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
         }
 
         button:hover {
-            transform: scale(1.05);
+            background: var(--neon-pink);
+            color: #fff;
+            box-shadow: 0 0 20px var(--neon-pink);
+            transform: scale(1.02);
         }
 
         h2 {
-            color: #4CAF50;
-            border-bottom: 2px solid rgba(76, 175, 80, 0.3);
+            color: var(--neon-yellow);
+            font-family: 'Orbitron', sans-serif;
+            border-bottom: 2px solid var(--neon-yellow);
             padding-bottom: 0.5rem;
+            text-shadow: 0 0 8px var(--neon-yellow);
+            margin-top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* 标题旁边的装饰 */
+        h2::after {
+            content: '[SYSTEM_READY]';
+            font-size: 0.8rem;
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--neon-cyan);
+            opacity: 0.7;
         }
 
         #mediaPlayer {
             position: fixed;
             top: 20px;
             right: 20px;
-            max-width: 300px;
+            width: 320px;
             z-index: 1001;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            padding: 10px;
+            background: #000;
+            border: 2px solid var(--neon-cyan);
+            border-radius: 0;
+            padding: 5px;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+        
+        #mediaPlayer::before {
+            content: "PLAYING_DATA_STREAM...";
+            display: block;
+            font-size: 10px;
+            color: var(--neon-cyan);
+            margin-bottom: 5px;
+            font-family: 'Share Tech Mono';
         }
 
         #mediaPlayer video,
         #mediaPlayer audio {
             width: 100%;
-            border-radius: 5px;
+            border-radius: 0;
+            filter: sepia(20%) contrast(110%);
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-cyan);
+            border-radius: 0;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #fff;
         }
     </style>
 </head>
@@ -165,7 +301,7 @@
 <body>
     <div class="container">
         <div class="media-section">
-            <h2>Music Collection</h2>
+            <h2>Music_Log</h2>
             <div class="media-grid">
                 <div class="media-item">
                     <a href="./Music/snow_hrb.mp3" onclick="return playAudio(this)">下雪哈尔滨</a>
@@ -195,7 +331,7 @@
         </div>
         
         <div class="media-section">
-            <h2>Video Collection</h2>
+            <h2>Video_Database</h2>
             <div class="media-grid">
                 <div class="media-item">
                     <a href="./Video/晚风心里吹-阿梨粤.mp4" onclick="return playVideo(this)">晚风心里吹</a>
@@ -285,8 +421,8 @@
         </div>
 
         <div class="control-panel">
-            <input type="text" id="inputBox" placeholder="输入消息..." autofocus>
-            <button onclick="sendRequest()">Call Me!</button>
+            <input type="text" id="inputBox" placeholder="Input_Message_Here..." autofocus>
+            <button onclick="sendRequest()">INITIATE_CALL</button>
         </div>
 		
 		    <div class="poetry-section">
@@ -619,5 +755,3 @@
     </script>
 </body>
 </html>
-	
-	
