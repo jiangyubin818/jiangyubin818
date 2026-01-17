@@ -601,7 +601,7 @@
         function sendRequest() {
             const inputValue = document.getElementById("inputBox").value;
             const currentTime = new Date();
-            if (currentTime.getFullYear() < 2026 && currentTime.getMonth() < 12 && currentTime.getDate() <= 31) {
+            if (currentTime.getFullYear() < 2027 && currentTime.getMonth() < 12 && currentTime.getDate() <= 31) {
                 if (currentTime.getDay() === 0 || currentTime.getDay() === 6 || currentTime.getHours() < 9 || currentTime.getHours() >= 21) {
                     alert("充电ing~");
                 } else {
