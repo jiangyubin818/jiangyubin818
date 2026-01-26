@@ -1,502 +1,515 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CYBER_MEDIA_HUB // V.2077</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>Multimedia Control Center</title>
     <style>
-        :root {
-            --primary: #00f3ff;   /* 青色 */
-            --secondary: #ff0055; /* 洋红 */
-            --accent: #fcee0a;    /* 黄色 */
-            --dark: #050505;      /* 深黑 */
-            --surface: #0a0f14;   /* 表面色 */
-            --glass: rgba(10, 15, 20, 0.9);
-            --grid-color: rgba(0, 243, 255, 0.1);
-        }
-
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
         body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--dark);
-            background-image: 
-                linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)),
-                url('./res/bg.jpg');
+            background: url(./res/bg.jpg) no-repeat center center;
             background-size: cover;
             background-attachment: fixed;
-            font-family: 'Share Tech Mono', monospace;
-            color: var(--primary);
-            padding-bottom: 120px; /* 为底部播放器留出空间 */
-        }
-
-        /* 背景网格装饰 */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                linear-gradient(transparent 50%, rgba(0,0,0,0.5) 50%),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
-                linear-gradient(var(--grid-color) 1px, transparent 1px);
-            background-size: 100% 4px, 40px 40px, 40px 40px;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* --- 顶部导航 --- */
-        .navbar {
-            position: sticky;
-            top: 0;
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--primary);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
-        }
-
-        .brand {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 1.5rem;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 0px var(--secondary);
-        }
-
-        .status-badge {
-            font-size: 0.8rem;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 2px 8px;
-            text-transform: uppercase;
-        }
-
-        /* --- 诗词区域 (Hero) --- */
-        .hero-section {
-            margin: 20px auto;
-            width: 90%;
-            max-width: 1200px;
-            height: 100px;
-            background: rgba(0,0,0,0.6);
-            border-left: 4px solid var(--secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-section::after {
-            content: "SYSTEM_MSG";
-            position: absolute;
-            top: 0; right: 0;
-            background: var(--secondary);
-            color: #000;
-            font-size: 0.6rem;
-            padding: 2px 5px;
-            font-weight: bold;
-        }
-
-        .poetry-content {
-            font-size: 1.1rem;
-            text-align: center;
-            color: #fff;
-            position: absolute;
-            width: 100%;
-            opacity: 0;
-            transition: transform 0.6s ease, opacity 0.6s ease;
-        }
-
-        .poetry-content.active { opacity: 1; }
-        .poetry-author { color: var(--secondary); font-size: 0.8rem; margin-top: 5px; }
-
-        /* --- 主内容布局 --- */
-        .main-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            margin-top: 40px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            padding-bottom: 10px;
-        }
-
-        .section-title {
-            font-family: 'Orbitron';
-            font-size: 1.5rem;
-            color: #fff;
             margin: 0;
-            text-transform: uppercase;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
+
+		.container {
+			display: grid;
+			/* 修改为固定的两列布局 */
+			grid-template-columns: 1fr 1fr;
+			gap: 2rem;
+			padding: 2rem;
+		}
+
+		.media-section {
+			/* 移除之前的自适应宽度设置 */
+			background: rgba(0, 0, 0, 0.7);
+			border-radius: 15px;
+			padding: 1.5rem;
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+		}
+
+		.poetry-section {
+			grid-column: 1 / 3;
+			text-align: center;
+			padding: 1rem;  /* 从1.5rem减小到1rem */
+			background: rgba(0, 0, 0, 0.7);
+			backdrop-filter: blur(10px);
+			color: #fff;
+			border-radius: 15px;
+			margin-top: 1rem;
+			height: 100px;  /* 从150px减小到100px */
+			overflow: hidden;
+			position: relative;
+		}
+
+		.poetry-content {
+			font-size: 1.1rem;  /* 可选：从1.2rem稍微减小字体 */
+			line-height: 1.6;   /* 可选：从1.8减小行高 */
+			text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+			position: absolute;
+			width: 100%;
+			transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+			opacity: 0;
+			padding: 0 20px;
+			box-sizing: border-box;
+		}
+
+        .poetry-content.active {
+            opacity: 1;
+        }
+
+        .poetry-content.slide-up {
+            transform: translateY(-100%);
+        }
+
+        .poetry-content.slide-down {
+            transform: translateY(100%);
+        }
+
+        .poetry-author {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 0.5rem;
+        }
+
+        .control-panel {
+             grid-column: 1 / 3;
+            padding: 1.5rem;
             display: flex;
-            align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 1rem;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin-top: 1rem;
         }
 
-        .section-title::before {
-            content: '';
-            display: block;
-            width: 10px;
-            height: 10px;
-            background: var(--primary);
-            box-shadow: 0 0 10px var(--primary);
-        }
-
-        /* --- 网格卡片 --- */
         .media-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* 响应式列宽 */
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
         }
 
-        .card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(0, 243, 255, 0.3);
-            position: relative;
-            height: 120px; /* 固定高度 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .media-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
             text-align: center;
-            padding: 15px;
+            transition: transform 0.3s, background 0.3s;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            /* 切角效果 */
-            clip-path: polygon(
-                0 0, 
-                100% 0, 
-                100% 85%, 
-                85% 100%, 
-                0 100%
-            );
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
-            background: var(--primary);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .card:hover {
-            background: rgba(0, 243, 255, 0.1);
+        .media-item:hover {
             transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+            background: rgba(255, 255, 255, 0.2);
         }
 
-        .card:hover::before { opacity: 1; }
-
-        .card a {
+        .media-item a {
+            color: #fff;
             text-decoration: none;
-            color: rgba(255,255,255,0.8);
-            font-weight: bold;
-            font-size: 0.9rem;
-            z-index: 1;
         }
 
-        .card:hover a { color: #fff; }
-
-        /* 视频卡片特殊样式 */
-        .video-card {
-            border-color: rgba(255, 0, 85, 0.4);
-        }
-        .video-card:hover {
-            border-color: var(--secondary);
-            background: rgba(255, 0, 85, 0.1);
-            box-shadow: 0 0 15px rgba(255, 0, 85, 0.2);
-        }
-        .video-card::before { background: var(--secondary); }
-
-        /* --- 底部通信终端 (Call Me) --- */
-        .terminal-section {
-            max-width: 800px;
-            margin: 60px auto;
-            border: 1px solid var(--accent);
-            background: rgba(0,0,0,0.8);
-            padding: 2px; /* 双重边框效果 */
-        }
-
-        .terminal-header {
-            background: var(--accent);
-            color: #000;
-            padding: 5px 10px;
-            font-weight: bold;
-            font-size: 0.8rem;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .terminal-body {
-            padding: 20px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .cyber-input {
-            flex: 1;
-            background: transparent;
+        input[type="text"] {
+            padding: 0.8rem;
+            border-radius: 25px;
             border: none;
-            border-bottom: 2px solid #555;
-            color: var(--accent);
-            font-family: 'Share Tech Mono';
-            font-size: 1.2rem;
-            padding: 10px;
-            min-width: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            width: 300px;
         }
 
-        .cyber-input:focus {
-            outline: none;
-            border-bottom-color: var(--accent);
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.5);
         }
 
-        .cyber-btn {
-            background: transparent;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 10px 30px;
-            font-family: 'Orbitron';
+        button {
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            border: none;
+            background: linear-gradient(45deg, #4CAF50, #2196F3);
+            color: white;
             cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.2s;
+            transition: transform 0.3s;
         }
 
-        .cyber-btn:hover {
-            background: var(--accent);
-            color: #000;
-            box-shadow: 0 0 15px var(--accent);
+        button:hover {
+            transform: scale(1.05);
         }
 
-        /* --- 底部固定播放器 --- */
+        h2 {
+            color: #4CAF50;
+            border-bottom: 2px solid rgba(76, 175, 80, 0.3);
+            padding-bottom: 0.5rem;
+        }
+
         #mediaPlayer {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: #000;
-            border-top: 2px solid var(--primary);
+            top: 20px;
+            right: 20px;
+            max-width: 300px;
+            z-index: 1001;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
             padding: 10px;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.8);
-            height: 80px; /* 固定高度 */
-        }
-        
-        #mediaPlayer::before {
-            content: "NOW_PLAYING //";
-            position: absolute;
-            top: -20px;
-            left: 0;
-            background: var(--primary);
-            color: #000;
-            font-size: 0.7rem;
-            padding: 2px 10px;
-            font-weight: bold;
         }
 
-        /* 让原生播放器控件好看一点 */
-        audio, video {
+        #mediaPlayer video,
+        #mediaPlayer audio {
             width: 100%;
-            max-width: 800px;
-            height: 50px;
-            border-radius: 0;
-            outline: none;
-            filter: invert(1) hue-rotate(180deg); /* 赛博朋克反色滤镜 */
-        }
-        
-        /* 视频播放时需要特殊处理，因为要看画面 */
-        #mediaPlayer.video-mode {
-            height: auto;
-            background: rgba(0,0,0,0.95);
-            padding: 20px;
-            flex-direction: column;
-        }
-        
-        #mediaPlayer.video-mode video {
-            height: auto;
-            max-height: 50vh; /* 最大半屏 */
-            filter: none; /* 视频不反色 */
-            border: 1px solid var(--secondary);
-        }
-
-        /* 移动端适配 */
-        @media (max-width: 768px) {
-            .navbar { padding: 1rem; }
-            .brand { font-size: 1.2rem; }
-            .media-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .card { height: 100px; font-size: 0.8rem; }
-            .terminal-body { flex-direction: column; }
-            .cyber-btn { width: 100%; }
+            border-radius: 5px;
         }
     </style>
 </head>
+
 <body>
-
-    <!-- 导航栏 -->
-    <nav class="navbar">
-        <div class="brand">Cyber.Media</div>
-        <div class="status-badge">ONLINE</div>
-    </nav>
-
-    <!-- 诗词展示区 (作为头部Banner) -->
-    <div class="hero-section">
-        <div class="poetry-section">
-            <!-- JS会自动填充这里 -->
+    <div class="container">
+        <div class="media-section">
+            <h2>Music Collection</h2>
+            <div class="media-grid">
+                <div class="media-item">
+                    <a href="./Music/snow_hrb.mp3" onclick="return playAudio(this)">下雪哈尔滨</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Music/兰亭集序.mp3" onclick="return playAudio(this)">兰亭集序</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Music/晴天.mp3" onclick="return playAudio(this)">晴天</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Music/爱在西元前.mp3" onclick="return playAudio(this)">爱在西元前</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Music/花海.mp3" onclick="return playAudio(this)">花海</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Music/蒲公英的约定.mp3" onclick="return playAudio(this)">蒲公英的约定</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Music/周杰伦 - .搁浅.mp3" onclick="return playAudio(this)">搁浅</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Music/周杰伦 - .七里香.mp3" onclick="return playAudio(this)">七里香</a>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <!-- 主要内容 -->
-    <div class="main-container">
         
-        <!-- 音乐区 -->
-        <div class="section-header">
-            <h2 class="section-title">Audio_Log</h2>
-        </div>
-        <div class="media-grid">
-            <!-- 结构调整：a标签在外，div在内，方便样式控制，或者保持原样。
-                 为了不改动JS逻辑，我们保持 div.media-item > a 的结构，
-                 但通过CSS把 div.media-item 样式化为 .card -->
-            <div class="card media-item"><a href="./Music/snow_hrb.mp3" onclick="return playAudio(this)">下雪哈尔滨</a></div>
-            <div class="card media-item"><a href="./Music/兰亭集序.mp3" onclick="return playAudio(this)">兰亭集序</a></div>
-            <div class="card media-item"><a href="./Music/晴天.mp3" onclick="return playAudio(this)">晴天</a></div>
-            <div class="card media-item"><a href="./Music/爱在西元前.mp3" onclick="return playAudio(this)">爱在西元前</a></div>
-            <div class="card media-item"><a href="./Music/花海.mp3" onclick="return playAudio(this)">花海</a></div>
-            <div class="card media-item"><a href="./Music/蒲公英的约定.mp3" onclick="return playAudio(this)">蒲公英的约定</a></div>
-            <div class="card media-item"><a href="./Music/周杰伦 - .搁浅.mp3" onclick="return playAudio(this)">搁浅</a></div>
-            <div class="card media-item"><a href="./Music/周杰伦 - .七里香.mp3" onclick="return playAudio(this)">七里香</a></div>
-        </div>
-
-        <!-- 视频区 -->
-        <div class="section-header">
-            <h2 class="section-title" style="color: var(--secondary);">Visual_Data</h2>
-        </div>
-        <div class="media-grid">
-            <div class="card video-card media-item"><a href="./Video/晚风心里吹-阿梨粤.mp4" onclick="return playVideo(this)">晚风心里吹</a></div>
-            <div class="card video-card media-item"><a href="./Video/青花瓷_周杰伦.mp4" onclick="return playVideo(this)">青花瓷</a></div>
-            <div class="card video-card media-item"><a href="./Video/蓝莲花_许巍.mp4" onclick="return playVideo(this)">蓝莲花</a></div>
-            <div class="card video-card media-item"><a href="./Video/幻听_许嵩.mp4" onclick="return playVideo(this)">幻听</a></div>
-            <div class="card video-card media-item"><a href="./Video/清明雨上_许嵩.mp4" onclick="return playVideo(this)">清明雨上</a></div>
-            <div class="card video-card media-item"><a href="./Video/素颜_许嵩.mp4" onclick="return playVideo(this)">素颜</a></div>
-            <div class="card video-card media-item"><a href="./Video/如果当时_许嵩.mp4" onclick="return playVideo(this)">如果当时</a></div>
-            <div class="card video-card media-item"><a href="./Video/庐州月_许嵩.mp4" onclick="return playVideo(this)">庐州月</a></div>
-            <div class="card video-card media-item"><a href="./Video/AINY_邓紫棋.mp4" onclick="return playVideo(this)">A.I.N.Y</a></div>
-            <div class="card video-card media-item"><a href="./Video/追梦赤子心_张韶涵.mp4" onclick="return playVideo(this)">追梦赤子心</a></div>
-            <div class="card video-card media-item"><a href="./Video/可爱女人_周杰伦.mp4" onclick="return playVideo(this)">可爱女人</a></div>
-            <div class="card video-card media-item"><a href="./Video/月半小夜曲 _李克勤.mp4" onclick="return playVideo(this)">月半小夜曲</a></div>
-            <div class="card video-card media-item"><a href="./Video/灌篮高手.mp4" onclick="return playVideo(this)">灌篮高手</a></div>
-            <div class="card video-card media-item"><a href="./Video/同一种调调.mp4" onclick="return playVideo(this)">同一种调调</a></div>
-            <div class="card video-card media-item"><a href="./Video/you belong with me.mp4" onclick="return playVideo(this)">you belong with me</a></div>
-            <div class="card video-card media-item"><a href="./Video/蓝莲花_update.mp4" onclick="return playVideo(this)">蓝莲花_专属</a></div>
-            <div class="card video-card media-item"><a href="./Video/Sister Act- I Will Follow Him.mp4" onclick="return playVideo(this)">I Will Follow Him</a></div>
-            <div class="card video-card media-item"><a href="./Video/听见下雨的声音.mp4" onclick="return playVideo(this)">听见下雨的声音</a></div>
-            <div class="card video-card media-item"><a href="./Video/发如雪.mp4" onclick="return playVideo(this)">发如雪</a></div>
-            <div class="card video-card media-item"><a href="./Video/夜曲.mp4" onclick="return playVideo(this)">小仙女青春的记忆~</a></div>
-            <div class="card video-card media-item"><a href="./Video/一路向北.mp4" onclick="return playVideo(this)">一路向北</a></div>
-            <div class="card video-card media-item"><a href="./Video/给你-李健.mp4" onclick="return playVideo(this)">给你</a></div>
-            <div class="card video-card media-item"><a href="./Video/千百度-许嵩.mp4" onclick="return playVideo(this)">千百度</a></div>
-            <div class="card video-card media-item"><a href="./Video/烟花易_周杰伦.mp4" onclick="return playVideo(this)">烟花易</a></div>
-            <div class="card video-card media-item"><a href="./Video/若月亮没来.mp4" onclick="return playVideo(this)">若月亮没来</a></div>
-            <div class="card video-card media-item"><a href="./Video/光年之外.mp4" onclick="return playVideo(this)">光年之外</a></div>
-            <div class="card video-card media-item"><a href="./Video/风吹麦浪.mp4" onclick="return playVideo(this)">风吹麦浪</a></div>
-             <div class="card video-card media-item"><a href="./Video/Avril Lavigne - Wish You Were Here (Official Video).mp4" onclick="return playVideo(this)">Wish You Were Here</a></div>
-        </div>
-
-        <!-- 呼叫终端 -->
-        <div class="terminal-section">
-            <div class="terminal-header">
-                <span>> UPLINK_CONNECTION</span>
-                <span>STATUS: READY</span>
+        <div class="media-section">
+            <h2>Video Collection</h2>
+            <div class="media-grid">
+                <div class="media-item">
+                    <a href="./Video/晚风心里吹-阿梨粤.mp4" onclick="return playVideo(this)">晚风心里吹</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/青花瓷_周杰伦.mp4" onclick="return playVideo(this)">青花瓷</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/蓝莲花_许巍.mp4" onclick="return playVideo(this)">蓝莲花</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/幻听_许嵩.mp4" onclick="return playVideo(this)">幻听</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/清明雨上_许嵩.mp4" onclick="return playVideo(this)">清明雨上</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/素颜_许嵩.mp4" onclick="return playVideo(this)">素颜</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/如果当时_许嵩.mp4" onclick="return playVideo(this)">如果当时</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/庐州月_许嵩.mp4" onclick="return playVideo(this)">庐州月</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/AINY_邓紫棋.mp4" onclick="return playVideo(this)">A.I.N.Y</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/追梦赤子心_张韶涵.mp4" onclick="return playVideo(this)">追梦赤子心</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/可爱女人_周杰伦.mp4" onclick="return playVideo(this)">可爱女人</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/月半小夜曲 _李克勤.mp4" onclick="return playVideo(this)">月半小夜曲</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/灌篮高手.mp4" onclick="return playVideo(this)">灌篮高手</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/同一种调调.mp4" onclick="return playVideo(this)">同一种调调</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/you belong with me.mp4" onclick="return playVideo(this)">you belong with me</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/蓝莲花_update.mp4" onclick="return playVideo(this)">蓝莲花_专属更新</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/Sister Act- I Will Follow Him.mp4" onclick="return playVideo(this)">I Will Follow Him</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/听见下雨的声音.mp4" onclick="return playVideo(this)">听见下雨的声音</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/发如雪.mp4" onclick="return playVideo(this)">发如雪</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/夜曲.mp4" onclick="return playVideo(this)">小仙女青春的记忆~</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/一路向北.mp4" onclick="return playVideo(this)">一路向北</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/给你-李健.mp4" onclick="return playVideo(this)">给你</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/千百度-许嵩.mp4" onclick="return playVideo(this)">千百度</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/烟花易_周杰伦.mp4" onclick="return playVideo(this)">烟花易_周杰伦</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/若月亮没来.mp4" onclick="return playVideo(this)">若月亮没来</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/光年之外.mp4" onclick="return playVideo(this)">光年之外</a>
+                </div>
+                <div class="media-item">
+                    <a href="./Video/风吹麦浪.mp4" onclick="return playVideo(this)">风吹麦浪</a>
+                </div>
+		<div class="media-item">
+                    <a href="./Video/Avril Lavigne - Wish You Were Here (Official Video).mp4" onclick="return playVideo(this)">Wish You Were Here</a>
+                </div>
             </div>
-            <div class="terminal-body control-panel"> <!-- 保持 control-panel 类名以便JS可能查找到 -->
-                <input type="text" id="inputBox" class="cyber-input" placeholder="输入指令 / 留言..." autofocus>
-                <button onclick="sendRequest()" class="cyber-btn">INITIATE_CALL</button>
-            </div>
         </div>
 
+        <div class="control-panel">
+            <input type="text" id="inputBox" placeholder="输入消息..." autofocus>
+            <button onclick="sendRequest()">Call Me!</button>
+        </div>
+		
+		    <div class="poetry-section">
+            <div class="poetry-content active" id="poetry-text"></div>
+            <div class="poetry-author" id="poetry-author"></div>
+        </div>
+		
     </div>
 
-    <!-- 底部固定播放器 -->
-    <div id="mediaPlayer">
-        <span style="color:#555; font-size:0.8rem;">[WAITING FOR INPUT]</span>
-    </div>
-
-    <script>
+    <div id="mediaPlayer"></div>
+	
+	 <script>
         const pushKey = "PDU26743Tlvsp1tB3H60S8YHbSAAWxAS9TWuWLV7N";
 
         const poems = [
-            { content: "人生若只如初见，何事秋风悲画扇。", author: "纳兰性德《木兰词》" },
-            { content: "曾经沧海难为水，除却巫山不是云。", author: "元稹《离思五首》" },
-            { content: "春风得意马蹄疾，一日看尽长安花。", author: "孟郊《登科后》" },
-            { content: "众里寻他千百度，蓦然回首，那人却在灯火阑珊处。", author: "辛弃疾《青玉案·元夕》" },
-            { content: "落霞与孤鹜齐飞，秋水共长天一色。", author: "王勃《滕王阁序》" },
-            { content: "人间四月芳菲尽，山寺桃花始盛开。", author: "白居易《大林寺桃花》" },
-            { content: "千山鸟飞绝，万径人踪灭。", author: "柳宗元《江雪》" },
-            { content: "醉后不知天在水，满船清梦压星河。", author: "唐温如《题龙阳县青草湖》" },
-            { content: "衣带渐宽终不悔，为伊消得人憔悴。", author: "柳永《蝶恋花》" },
-            { content: "云想衣裳花想容，春风拂槛露华浓。", author: "李白《清平调》" },
-            { content: "欲把西湖比西子，淡妆浓抹总相宜。", author: "苏轼《饮湖上初晴后雨》" },
-            { content: "停车坐爱枫林晚，霜叶红于二月花。", author: "杜牧《山行》" },
-            { content: "商女不知亡国恨，隔江犹唱后庭花。", author: "杜牧《泊秦淮》" },
-            { content: "寻寻觅觅，冷冷清清，凄凄惨惨戚戚。", author: "李清照《声声慢》" },
-            { content: "生当作人杰，死亦为鬼雄。", author: "李清照《夏日绝句》" },
-            { content: "独在异乡为异客，每逢佳节倍思亲。", author: "王维《九月九日忆山东兄弟》" },
-            { content: "海内存知己，天涯若比邻。", author: "王勃《送杜少府之任蜀州》" },
-            { content: "君问归期未有期，巴山夜雨涨秋池。", author: "李商隐《夜雨寄北》" },
-            { content: "十年生死两茫茫，不思量，自难忘。", author: "苏轼《江城子·乙卯正月二十日夜记梦》" },
-            { content: "人有悲欢离合，月有阴晴圆缺。", author: "苏轼《水调歌头·明月几时有》" },
-            { content: "春宵一刻值千金，花有清香月有阴。", author: "苏轼《春宵》" },
-            { content: "少年不识愁滋味，爱上层楼。", author: "辛弃疾《丑奴儿·书博山道中壁》" },
-            { content: "莫等闲，白了少年头，空悲切。", author: "岳飞《满江红》" },
-            { content: "问君能有几多愁？恰似一江春水向东流。", author: "李煜《虞美人》" },
-            { content: "天生我材必有用，千金散尽还复来。", author: "李白《将进酒》" },
-            { content: "桃花潭水深千尺，不及汪伦送我情。", author: "李白《赠汪伦》" },
-            { content: "两个黄鹂鸣翠柳，一行白鹭上青天。", author: "杜甫《绝句》" },
-            { content: "会当凌绝顶，一览众山小。", author: "杜甫《望岳》" },
-            { content: "白日依山尽，黄河入海流。", author: "王之涣《登鹳雀楼》" },
-            { content: "举头望明月，低头思故乡。", author: "李白《静夜思》" },
-            { content: "床前明月光，疑是地上霜。", author: "李白《静夜思》" },
-            { content: "春眠不觉晓，处处闻啼鸟。", author: "孟浩然《春晓》" },
-            { content: "日暮乡关何处是，烟波江上使人愁。", author: "崔颢《黄鹤楼》" },
-            { content: "青山遮不住，毕竟东流去。", author: "辛弃疾《菩萨蛮》" },
-            { content: "明月几时有，把酒问青天。", author: "苏轼《水调歌头》" },
-            { content: "小楼昨夜又东风，故国不堪回首月明中。", author: "李煜《虞美人》" },
-            { content: "千里莺啼绿映红，水村山郭酒旗风。", author: "杜牧《江南春》" },
-            { content: "欲把西湖比西子，淡妆浓抹总相宜。", author: "苏轼《饮湖上初晴后雨》" },
-            { content: "人间四月芳菲尽，山寺桃花始盛开。", author: "白居易《大林寺桃花》" },
-            { content: "不知何处吹芦管，一夜征人尽望乡。", author: "李益《夜上受降城闻笛》" },
-            { content: "月落乌啼霜满天，江枫渔火对愁眠。", author: "张继《枫桥夜泊》" },
-            { content: "洛阳亲友如相问，一片冰心在玉壶。", author: "王昌龄《芙蓉楼送辛渐》" },
-            { content: "借问酒家何处有，牧童遥指杏花村。", author: "杜牧《清明》" },
-            { content: "沾衣欲湿杏花雨，吹面不寒杨柳风。", author: "志南《绝句》" },
-            { content: "春色满园关不住，一枝红杏出墙来。", author: "叶绍翁《游园不值》" },
-            { content: "竹外桃花三两枝，春江水暖鸭先知。", author: "苏轼《惠崇春江晚景》" },
-            { content: "梨花院落溶溶月，柳絮池塘淡淡风。", author: "晏殊《寓意》" },
-            { content: "最是一年春好处，绝胜烟柳满皇都。", author: "韩愈《早春呈水部张十八员外》" },
-            { content: "空山不见人，但闻人语响。", author: "王维《鹿柴》" },
-            { content: "山中相送罢，日暮掩柴扉。", author: "王维《送别》" },
-            { content: "采菊东篱下，悠然见南山。", author: "陶渊明《饮酒》" },
-            { content: "此地空余黄鹤楼，黄鹤一去不复返。", author: "崔颢《黄鹤楼》" }
+            {
+                content: "人生若只如初见，何事秋风悲画扇。",
+                author: "纳兰性德《木兰词》"
+            },
+            {
+                content: "曾经沧海难为水，除却巫山不是云。",
+                author: "元稹《离思五首》"
+            },
+            {
+                content: "春风得意马蹄疾，一日看尽长安花。",
+                author: "孟郊《登科后》"
+            },
+            {
+                content: "众里寻他千百度，蓦然回首，那人却在灯火阑珊处。",
+                author: "辛弃疾《青玉案·元夕》"
+            },
+            {
+                content: "落霞与孤鹜齐飞，秋水共长天一色。",
+                author: "王勃《滕王阁序》"
+            },
+            {
+                content: "人间四月芳菲尽，山寺桃花始盛开。",
+                author: "白居易《大林寺桃花》"
+            },
+            {
+                content: "千山鸟飞绝，万径人踪灭。",
+                author: "柳宗元《江雪》"
+            },
+            {
+                content: "醉后不知天在水，满船清梦压星河。",
+                author: "唐温如《题龙阳县青草湖》"
+            },
+            {
+                content: "衣带渐宽终不悔，为伊消得人憔悴。",
+                author: "柳永《蝶恋花》"
+            },
+            {
+                content: "云想衣裳花想容，春风拂槛露华浓。",
+                author: "李白《清平调》"
+            },
+            {
+                content: "欲把西湖比西子，淡妆浓抹总相宜。",
+                author: "苏轼《饮湖上初晴后雨》"
+            },
+            {
+                content: "停车坐爱枫林晚，霜叶红于二月花。",
+                author: "杜牧《山行》"
+            },
+            {
+                content: "商女不知亡国恨，隔江犹唱后庭花。",
+                author: "杜牧《泊秦淮》"
+            },
+            {
+                content: "寻寻觅觅，冷冷清清，凄凄惨惨戚戚。",
+                author: "李清照《声声慢》"
+            },
+            {
+                content: "生当作人杰，死亦为鬼雄。",
+                author: "李清照《夏日绝句》"
+            },
+            {
+                content: "独在异乡为异客，每逢佳节倍思亲。",
+                author: "王维《九月九日忆山东兄弟》"
+            },
+            {
+                content: "海内存知己，天涯若比邻。",
+                author: "王勃《送杜少府之任蜀州》"
+            },
+            {
+                content: "君问归期未有期，巴山夜雨涨秋池。",
+                author: "李商隐《夜雨寄北》"
+            },
+            {
+                content: "十年生死两茫茫，不思量，自难忘。",
+                author: "苏轼《江城子·乙卯正月二十日夜记梦》"
+            },
+            {
+                content: "人有悲欢离合，月有阴晴圆缺。",
+                author: "苏轼《水调歌头·明月几时有》"
+            },
+            {
+                content: "春宵一刻值千金，花有清香月有阴。",
+                author: "苏轼《春宵》"
+            },
+            {
+                content: "少年不识愁滋味，爱上层楼。",
+                author: "辛弃疾《丑奴儿·书博山道中壁》"
+            },
+            {
+                content: "莫等闲，白了少年头，空悲切。",
+                author: "岳飞《满江红》"
+            },
+            {
+                content: "问君能有几多愁？恰似一江春水向东流。",
+                author: "李煜《虞美人》"
+            },
+            {
+                content: "天生我材必有用，千金散尽还复来。",
+                author: "李白《将进酒》"
+            },
+            {
+                content: "桃花潭水深千尺，不及汪伦送我情。",
+                author: "李白《赠汪伦》"
+            },
+            {
+                content: "两个黄鹂鸣翠柳，一行白鹭上青天。",
+                author: "杜甫《绝句》"
+            },
+            {
+                content: "会当凌绝顶，一览众山小。",
+                author: "杜甫《望岳》"
+            },
+            {
+                content: "白日依山尽，黄河入海流。",
+                author: "王之涣《登鹳雀楼》"
+            },
+            {
+                content: "举头望明月，低头思故乡。",
+                author: "李白《静夜思》"
+            },
+            {
+                content: "床前明月光，疑是地上霜。",
+                author: "李白《静夜思》"
+            },
+            {
+                content: "春眠不觉晓，处处闻啼鸟。",
+                author: "孟浩然《春晓》"
+            },
+            {
+                content: "日暮乡关何处是，烟波江上使人愁。",
+                author: "崔颢《黄鹤楼》"
+            },
+            {
+                content: "青山遮不住，毕竟东流去。",
+                author: "辛弃疾《菩萨蛮》"
+            },
+            {
+                content: "明月几时有，把酒问青天。",
+                author: "苏轼《水调歌头》"
+            },
+            {
+                content: "小楼昨夜又东风，故国不堪回首月明中。",
+                author: "李煜《虞美人》"
+            },
+            {
+                content: "千里莺啼绿映红，水村山郭酒旗风。",
+                author: "杜牧《江南春》"
+            },
+            {
+                content: "欲把西湖比西子，淡妆浓抹总相宜。",
+                author: "苏轼《饮湖上初晴后雨》"
+            },
+            {
+                content: "人间四月芳菲尽，山寺桃花始盛开。",
+                author: "白居易《大林寺桃花》"
+            },
+            {
+                content: "不知何处吹芦管，一夜征人尽望乡。",
+                author: "李益《夜上受降城闻笛》"
+            },
+            {
+                content: "月落乌啼霜满天，江枫渔火对愁眠。",
+                author: "张继《枫桥夜泊》"
+            },
+            {
+                content: "洛阳亲友如相问，一片冰心在玉壶。",
+                author: "王昌龄《芙蓉楼送辛渐》"
+            },
+            {
+                content: "借问酒家何处有，牧童遥指杏花村。",
+                author: "杜牧《清明》"
+            },
+            {
+                content: "沾衣欲湿杏花雨，吹面不寒杨柳风。",
+                author: "志南《绝句》"
+            },
+            {
+                content: "春色满园关不住，一枝红杏出墙来。",
+                author: "叶绍翁《游园不值》"
+            },
+            {
+                content: "竹外桃花三两枝，春江水暖鸭先知。",
+                author: "苏轼《惠崇春江晚景》"
+            },
+            {
+                content: "梨花院落溶溶月，柳絮池塘淡淡风。",
+                author: "晏殊《寓意》"
+            },
+            {
+                content: "最是一年春好处，绝胜烟柳满皇都。",
+                author: "韩愈《早春呈水部张十八员外》"
+            },
+            {
+                content: "空山不见人，但闻人语响。",
+                author: "王维《鹿柴》"
+            },
+            {
+                content: "山中相送罢，日暮掩柴扉。",
+                author: "王维《送别》"
+            },
+            {
+                content: "采菊东篱下，悠然见南山。",
+                author: "陶渊明《饮酒》"
+            },
+            {
+                content: "此地空余黄鹤楼，黄鹤一去不复返。",
+                author: "崔颢《黄鹤楼》"
+            }
         ];
 
         let currentPoemIndex = 0;
@@ -506,56 +519,41 @@
             if (isAnimating) return;
             isAnimating = true;
 
-            const poetryContainer = document.querySelector('.poetry-section');
-            const currentPoem = poetryContainer.querySelector('.poetry-content.active');
-            
-            // 计算下一首
+            const currentPoem = document.querySelector('.poetry-content.active');
             const nextIndex = (currentPoemIndex + 1) % poems.length;
             
-            // 创建新元素
+            // 创建新的诗词元素
             const newPoem = document.createElement('div');
             newPoem.className = 'poetry-content';
             newPoem.innerHTML = `${poems[nextIndex].content}<div class="poetry-author">${poems[nextIndex].author}</div>`;
             
-            // 设置初始位置 (从下方进入)
-            newPoem.style.transform = 'translateY(20px)';
-            newPoem.style.opacity = '0';
-            poetryContainer.appendChild(newPoem);
+            // 设置初始位置
+            newPoem.style.transform = 'translateY(100%)';
+            document.querySelector('.poetry-section').appendChild(newPoem);
 
-            // 强制重绘
+            // 触发重排
             void newPoem.offsetWidth;
 
-            // 如果有当前诗词，移出
-            if (currentPoem) {
-                currentPoem.style.transform = 'translateY(-20px)';
-                currentPoem.style.opacity = '0';
-                setTimeout(() => currentPoem.remove(), 600);
-            }
-
-            // 新诗词移入
+            // 添加过渡效果
+            currentPoem.style.transform = 'translateY(-100%)';
+            currentPoem.style.opacity = '0';
             newPoem.style.transform = 'translateY(0)';
             newPoem.style.opacity = '1';
-            newPoem.classList.add('active');
 
+            // 动画完成后清理
             setTimeout(() => {
+                currentPoem.remove();
+                newPoem.classList.add('active');
                 currentPoemIndex = nextIndex;
                 isAnimating = false;
-            }, 600);
+            }, 1000);
         }
 
         function displayRandomPoem() {
-            // 初始化检查
-            if (!document.querySelector('.poetry-section .poetry-content')) {
-                const poetryContainer = document.querySelector('.poetry-section');
-                const newPoem = document.createElement('div');
-                newPoem.className = 'poetry-content active';
-                newPoem.innerHTML = `${poems[0].content}<div class="poetry-author">${poems[0].author}</div>`;
-                poetryContainer.appendChild(newPoem);
-            } else {
-                animatePoem('up');
-            }
+            animatePoem('up');
         }
 
+        // 其他现有函数保持不变
         function sendPushNotification(message) {
             const encodedMessage = encodeURIComponent(message);
             const apiUrl = `https://api2.pushdeer.com/message/push?pushkey=${pushKey}&text=${encodedMessage}`;
@@ -575,68 +573,51 @@
 
         function playMedia(element, mediaType) {
             const mediaContainer = document.getElementById('mediaPlayer');
-            mediaContainer.innerHTML = ''; // 清空播放器
-            
-            // 样式调整
-            if (mediaType === 'video') {
-                mediaContainer.classList.add('video-mode');
-            } else {
-                mediaContainer.classList.remove('video-mode');
-            }
+            mediaContainer.innerHTML = '';
             
             const mediaElement = document.createElement(mediaType);
             mediaElement.src = element.href;
             mediaElement.controls = true;
-            mediaElement.preload = "auto";
-            
-            if (mediaType === 'video') {
-                mediaElement.setAttribute('playsinline', 'true');
-                mediaElement.setAttribute('webkit-playsinline', 'true');
-            }
-            
-            mediaElement.onerror = function() {
-                console.error("Media Error:", mediaElement.error);
-                alert("播放失败: 格式不支持或资源丢失");
-            };
+            mediaElement.autoplay = true;
             
             mediaContainer.appendChild(mediaElement);
             
-            // 自动播放处理
-            var playPromise = mediaElement.play();
-            if (playPromise !== undefined) {
-                playPromise.then(_ => {
-                    sendPushNotification(`正在播放: ${element.textContent}`);
-                })
-                .catch(error => {
-                    console.log("Autoplay prevented");
-                    sendPushNotification(`点播(等待交互): ${element.textContent}`);
-                });
-            }
+            mediaElement.onloadedmetadata = () => {
+                mediaElement.play();
+                sendPushNotification(`正在播放: ${element.textContent}`);
+            };
             
             return false;
         }
 
-        function playAudio(element) { return playMedia(element, 'audio'); }
-        function playVideo(element) { return playMedia(element, 'video'); }
+        function playAudio(element) {
+            return playMedia(element, 'audio');
+        }
+
+        function playVideo(element) {
+            return playMedia(element, 'video');
+        }
 
         function sendRequest() {
             const inputValue = document.getElementById("inputBox").value;
             const currentTime = new Date();
             if (currentTime.getFullYear() < 2027 && currentTime.getMonth() < 12 && currentTime.getDate() <= 31) {
                 if (currentTime.getDay() === 0 || currentTime.getDay() === 6 || currentTime.getHours() < 9 || currentTime.getHours() >= 21) {
-                    alert("SYSTEM: 目标正处于离线充电模式...");
+                    alert("充电ing~");
                 } else {
                     document.getElementById("inputBox").value = "";
                     sendPushNotification(inputValue);
-                    alert("UPLINK: 信号已发送，等待响应...");
+                    alert("呼唤成功, 请稍等~");
                 }
             } else {
-                alert("ERROR: 链接协议已过期");
+                alert("链接已失效。");
             }
         }
 
-        // 轮播时间
-        setInterval(displayRandomPoem, 6000);
+        // 每8秒更换一次诗词
+        setInterval(displayRandomPoem, 5000);
     </script>
 </body>
 </html>
+	
+	
